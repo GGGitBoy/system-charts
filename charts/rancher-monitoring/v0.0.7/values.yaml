@@ -396,3 +396,25 @@ operator-init:
     requests:
       cpu: 20m
       memory: 20Mi
+
+webhook-receiver:
+  enabled: false
+  apiGroup: "monitoring.coreos.com"
+  image:
+    repository: "dockerrrboy/webhook-receiver"
+    tag: latest
+  port: 9094
+  replicas: 1 
+  service:
+    type: ClusterIP
+  config: {}
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  nodeSelector: {}
+  tolerations: {}
+  affinity: {}
