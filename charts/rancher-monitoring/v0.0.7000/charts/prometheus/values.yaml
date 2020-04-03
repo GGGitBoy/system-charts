@@ -23,7 +23,7 @@ paused: false
 
 ## Number of Prometheus replicas desired
 ##
-replicaCount: 1
+replicaCount: 2
 
 ## The remote_read spec configuration for Prometheus.
 ## Ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#remotereadspec
