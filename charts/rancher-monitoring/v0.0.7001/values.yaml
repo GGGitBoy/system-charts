@@ -375,6 +375,8 @@ prometheus:
     alertManagerNamespace: ""
   thanos:
     enabled: false
+  livenessProbe: {}
+  readinessProbe: {}
 
 global:
   systemDefaultRegistry: ""
