@@ -176,7 +176,7 @@ secrets:
       </source>
 
       <source>
-        @type tail
+        @type tail  
         path /var/lib/rancher/log-volumes/*/rfc5424/*/*
         pos_file /fluentd/log/custom_project_rfc5424_new.log.pos
         tag tmp-project-custom.*
