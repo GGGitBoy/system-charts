@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ template "logging-operator.fullname" . }}
+  name: test
   labels:
 {{ include "logging-operator.labels" . | indent 4 }}
 rules:
@@ -15,22 +15,22 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ template "logging-operator.fullname" . }}
+  name: test
   labels:
 {{ include "logging-operator.labels" . | indent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ template "logging-operator.fullname" . }}
+  name: test
 subjects:
   - kind: ServiceAccount
-    name: {{ template "logging-operator.fullname" . }}
+    name: test
     namespace: {{ .Release.Namespace }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ template "logging-operator.fullname" . }}
+  name: test
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "logging-operator.labels" . | indent 4 }}
