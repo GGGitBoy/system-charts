@@ -11,7 +11,7 @@ spec:
   backoffLimit: 3
   template:
     spec:
-      serviceAccountName: {{ template "logging-operator.fullname" . }}
+      serviceAccountName: test
       securityContext:
         runAsUser: 65534
         runAsNonRoot: true
@@ -27,5 +27,5 @@ spec:
       volumes:
       - name: data-crds
         configMap:
-          name: {{ template "logging-operator.fullname" . }}
+          name: test
       restartPolicy: Never
