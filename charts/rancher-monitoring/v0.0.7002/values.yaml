@@ -377,6 +377,7 @@ prometheus:
     enabled: false
   livenessProbe: {}
   readinessProbe: {}
+  serviceNodePort: false
 
 global:
   systemDefaultRegistry: ""
