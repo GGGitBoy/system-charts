@@ -191,7 +191,7 @@ exporter-kube-state:
   resources:
     limits:
       cpu: 10000m
-      memory: 200Mi
+      memory: 20000Mi
     requests:
       cpu: 100m
       memory: 130Mi
