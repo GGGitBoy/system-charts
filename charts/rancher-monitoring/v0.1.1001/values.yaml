@@ -190,8 +190,8 @@ exporter-kube-state:
   nodeSelectors: []
   resources:
     limits:
-      cpu: 800m
-      memory: 800Mi
+      cpu: 1100m
+      memory: 1100Mi
     requests:
       cpu: 100m
       memory: 130Mi
