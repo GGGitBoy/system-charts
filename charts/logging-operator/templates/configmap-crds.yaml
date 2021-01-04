@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: test 
+  labels:
+    test: test
+data:
+{{ (.Files.Glob "crds/*.yaml").AsConfig | indent 2 }}
