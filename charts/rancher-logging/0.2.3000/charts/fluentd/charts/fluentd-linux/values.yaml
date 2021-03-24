@@ -51,7 +51,7 @@ cluster:
 configmapReload:
   name: reloader
   image:
-    repository: rancher/configmap-reload
-    tag: v0.3.0-rancher3
+    repository: dockerrrboy/configmap-reload
+    tag: latest
     pullPolicy: IfNotPresent
   resources: {}
