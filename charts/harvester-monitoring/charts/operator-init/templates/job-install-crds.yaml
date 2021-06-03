@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-install, post-upgrade
-    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-delete-policy": hook-succeeded, before-hook-creation
 spec:
   ttlSecondsAfterFinished: 100
   backoffLimit: 3
@@ -30,7 +30,11 @@ spec:
         - name: data-crds
           mountPath: /etc/operator-init
           readOnly: true
-        command: ["kubectl",  "apply", "-f", "/etc/operator-init/."]
+        command:
+          - /bin/kubectl
+          - apply
+          - -f
+          - /etc/operator-init/.
       volumes:
       - name: data-crds
         configMap:

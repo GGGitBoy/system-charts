@@ -26,6 +26,6 @@ data:
       type: prometheus
       access: proxy
       basicAuth: false
-      editable: false
+      editable: true
       isDefault: true
       url: {{ .Values.prometheusDatasourceURL }}
