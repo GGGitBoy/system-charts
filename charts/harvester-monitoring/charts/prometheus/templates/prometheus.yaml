@@ -40,33 +40,6 @@ spec:
       name: configmap-{{ template "app.nginx.fullname" . }}
     - mountPath: /var/cache/nginx
       name: nginx-home
-{{- if eq .Values.level "cluster" }}
-  - name: prometheus-agent
-    command:
-    - prometheus-auth
-    {{- if and .Values.auth .Values.auth.args }}
-    args:
-{{ toYaml .Values.auth.args | indent 6 }}
-    {{- end }}
-    {{- if and .Values.auth .Values.auth.env }}
-    env:
-{{ toYaml .Values.auth.env | indent 6 }}
-    {{- end }}
-    image: {{ template "system_default_registry" . }}{{ .Values.image.auth.repository }}:{{ .Values.image.auth.tag }}
-    ports:
-    - containerPort: 9090
-      name: web
-      protocol: TCP
-    livenessProbe:
-{{ merge .Values.livenessProbe .Values.defaultLivenessProbe | toYaml | indent 6 }}
-    readinessProbe:
-{{ merge .Values.readinessProbe .Values.defaultReadinessProbe | toYaml | indent 6 }}
-    {{- if and .Values.resources .Values.resources.auth }}
-    resources:
-{{ toYaml .Values.resources.auth | indent 6 }}
-    {{- end }}
-  listenLocal: true
-{{- end }}
   podMetadata:
     creationTimestamp: {{ now | date "2006-01-02T15:04:05Z" | quote }}
     labels:
@@ -126,7 +99,6 @@ spec:
   remoteWrite:
 {{ toYaml .Values.remoteWrite | indent 4 }}
 {{- end }}
-{{ include "rule.namespace.selector" . | indent 2}}
 {{- if or .Values.storageSpec .Values.persistence.enabled }}
   storage:
     disableMountSubPath: {{ .Values.disableMountSubPath }}
@@ -173,13 +145,5 @@ spec:
 {{- if .Values.tolerations }}
 {{ toYaml .Values.tolerations | indent 4 }}
 {{- end }}
-{{- if (include "additional-scrape-configs.yaml" .) }}
-  additionalScrapeConfigs:
-    name: {{ template "app.fullname" . }}-additional-scrape-configs
-    key: additional-scrape-configs.yaml
-{{- end }}
-{{- if (include "additional-alertmanager-configs.yaml" .) }}
-  additionalAlertManagerConfigs:
-    name: {{ template "app.fullname" . }}-additional-alertmanager-configs
-    key: additional-alertmanager-configs.yaml
-{{- end }}
+
+

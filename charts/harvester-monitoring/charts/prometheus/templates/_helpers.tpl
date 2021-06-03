@@ -81,10 +81,3 @@ serviceMonitorNamespaceSelector:
 {{ include "namespace.selector" $rootContext | indent 2 }}
 {{- end -}}
 
-{{- define "rule.namespace.selector" -}}
-{{- $rootContext := dict -}}
-{{- $_ := set $rootContext "projectName" .Values.global.projectName -}}
-{{- $_ := set $rootContext "selector" .Values.ruleNamespaceSelector -}}
-ruleNamespaceSelector:
-{{ include "namespace.selector" $rootContext | indent 2 }}
-{{- end -}}
