@@ -136,9 +136,6 @@ prometheus:
   ## Override the default generated ServiceAccount name
   ##
   serviceAccountNameOverride: ""
-  ruleNamespaceSelector: {}
-  ruleSelector:
-    matchExpressions: []
   serviceMonitorNamespaceSelector: {}
   serviceMonitorSelector:
     matchExpressions: []

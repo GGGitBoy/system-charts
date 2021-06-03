@@ -88,20 +88,3 @@ serviceMonitorNamespaceSelector:
 ruleNamespaceSelector:
 {{ include "namespace.selector" $rootContext | indent 2 }}
 {{- end -}}
-
-{{- define "rule.selector" -}}
-ruleSelector:
-{{- if and .Values.ruleSelector .Values.ruleSelector.matchLabels }}
-  matchLabels:
-{{ toYaml .Values.ruleSelector.matchLabels | indent 4}}
-{{- end }}
-  matchExpressions:
-{{- if eq .Values.level "project" }}
-  - key: "source"
-    operator: "In"
-    values: [ "rancher-alert" ]
-{{- end }}
-{{- if and .Values.ruleSelector .Values.ruleSelector.matchExpressions }}
-{{ toYaml .Values.ruleSelector.matchExpressions | indent 2}}
-{{- end }}
-{{- end }}
