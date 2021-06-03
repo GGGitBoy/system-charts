@@ -73,17 +73,6 @@ spec:
       app: {{ template "app.name" . }}
       chart: {{ template "app.version" . }}
       release: {{ .Release.Name }}
-{{- if .Values.alertingEndpoints }}
-  alerting:
-    alertmanagers:
-{{ toYaml .Values.alertingEndpoints | indent 6 }}
-{{- else if not (include "additional-alertmanager-configs.yaml" .) }}
-  alerting:
-    alertmanagers:
-      - namespace: {{ .Values.cluster.alertManagerNamespace }}
-        name: alertmanager-operated
-        port: http
-{{- end }}
   image: {{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}
 {{- if or (.Values.externalLabels) (eq .Values.level "project") }}
   externalLabels:
@@ -93,14 +82,6 @@ spec:
 {{- range $key, $value := .Values.externalLabels}}
     {{ $key }}: {{ $value | quote }}
 {{- end }}
-{{- end }}
-{{- if .Values.thanos.enabled }}
-  thanos: 
-    image: {{ template "system_default_registry" . }}{{ .Values.image.thanos.repository }}:{{ .Values.image.thanos.tag }}
-    version: {{ .Values.image.thanos.tag }}
-    objectStorageConfig:
-      key: thanos.yaml
-      name: {{ template "app.thanos.fullname" . }}
 {{- end }}
   nodeSelector:
 {{- include "linux-node-selector" . | nindent 4 }}
