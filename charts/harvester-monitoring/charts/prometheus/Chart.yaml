@@ -1,8 +1,4 @@
 apiVersion: v1
-description: Creates Prometheus CRD instance for Kubernetes which maintaining by Rancher 2.
-engine: gotpl
-maintainers:
-- name: thxCode
-  email: frank@rancher.com
+description: Creates Prometheus CRD instance for Harvester.
 name: prometheus
 version: 0.0.1

@@ -1,15 +1,5 @@
 {{/* vim: set filetype=mustache: */}}
 
-{{- define "charts.exporter-kubelets.fullname" -}}
-{{- printf "exporter-kubelets-%s" .Release.Name -}}
-{{- end -}}
-
-
-{{- define "charts.prometheus.serviceaccount.fullname" -}}
-{{- printf "prometheus-%s" .Release.Name -}}
-{{- end -}}
-
-
 {{- define "app.name" -}}
 {{- default .Chart.Name .Values.nameOverride -}}
 {{- end -}}
@@ -28,41 +18,9 @@
 {{- end -}}
 
 
-{{- define "app.dnsname" -}}
-{{- include "app.fullname" . | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-
-{{- define "app.psp.fullname" -}}
-{{- $name := include "app.name" . -}}
-{{- printf "%s-%s-psp" $name .Release.Name -}}
-{{- end -}}
-
-
 {{- define "app.nginx.fullname" -}}
 {{- $name := include "app.name" . -}}
 {{- printf "%s-%s-nginx" $name .Release.Name -}}
-{{- end -}}
-
-
-{{- define "app.hooks.fullname" -}}
-{{- $name := include "app.name" . -}}
-{{- printf "%s-%s-hooks" $name .Release.Name -}}
-{{- end -}}
-
-
-{{- define "app.cleanup.fullname" -}}
-{{- $name := include "app.name" . -}}
-{{- printf "%s-%s-cleanup" $name .Release.Name -}}
-{{- end -}}
-
-{{- define "app.thanos.fullname" -}}
-{{- $name := include "app.name" . -}}
-{{- printf "%s-%s-thanos" $name .Release.Name -}}
-{{- end -}}
-
-{{- define "kube_version" -}}
-{{- printf "%s.%s" .Capabilities.KubeVersion.Major .Capabilities.KubeVersion.Minor -}}
 {{- end -}}
 
 
@@ -150,8 +108,3 @@ kubernetes.io/os: linux
 {{- end -}}
 {{- end -}}
 
-{{- define "webhook-receiver.labels" -}}
-app: {{ template "app.name" . }}
-chart: {{ template "app.version" . }}
-release: {{ .Release.Name }}
-{{- end -}}

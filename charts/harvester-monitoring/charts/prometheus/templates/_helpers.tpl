@@ -51,12 +51,6 @@
 {{- end -}}
 {{- end -}}
 
-
-{{- define "app.auth.fullname" -}}
-{{- $name := include "app.name" . -}}
-{{- printf "%s-auth-%s" $name .Release.Name -}}
-{{- end -}}
-
 {{- define "namespace.selector" -}}
 {{- if and .selector .selector.matchLabels -}}
 matchLabels:

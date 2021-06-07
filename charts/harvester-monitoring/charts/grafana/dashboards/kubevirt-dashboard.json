@@ -272,7 +272,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -309,7 +309,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(kubevirt_vmi_storage_iops_total{exported_namespace=\"$namespace\", name=\"$vm\"}[1m])",
+          "expr": "irate(kubevirt_vmi_storage_iops_total{exported_namespace=\"$namespace\", name=\"$vm\"}[5m])",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -364,7 +364,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -401,7 +401,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(kubevirt_vmi_storage_traffic_bytes_total{exported_namespace=\"$namespace\", name=\"$vm\"}[1m])",
+          "expr": "irate(kubevirt_vmi_storage_traffic_bytes_total{exported_namespace=\"$namespace\", name=\"$vm\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -455,7 +455,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -492,7 +492,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(kubevirt_vmi_storage_times_ms_total{exported_namespace=\"$namespace\", name=\"$vm\"}[1m])",
+          "expr": "irate(kubevirt_vmi_storage_times_ms_total{exported_namespace=\"$namespace\", name=\"$vm\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -559,7 +559,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
