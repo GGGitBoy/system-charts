@@ -90,7 +90,7 @@
 {{- end -}}
 
 {{/*
-Windows cluster will add default taint for linux nodes, 
+Windows cluster will add default taint for linux nodes,
 add below linux tolerations to workloads could be scheduled to those linux nodes
 */}}
 {{- define "linux-node-tolerations" -}}

@@ -6,9 +6,9 @@ metadata:
     helm.sh/hook: crd-install
     controller-gen.kubebuilder.io/version: v0.2.4
   creationTimestamp: null
-  name: servicemonitors.monitoring.coreos.com
+  name: servicemonitors.prometheus.coreos.com
 spec:
-  group: monitoring.coreos.com
+  group: prometheus.coreos.com
   names:
     kind: ServiceMonitor
     listKind: ServiceMonitorList
@@ -19,7 +19,7 @@ spec:
   - name: v1
     schema:
       openAPIV3Schema:
-        description: ServiceMonitor defines monitoring for a set of services.
+        description: ServiceMonitor defines prometheus for a set of services.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation

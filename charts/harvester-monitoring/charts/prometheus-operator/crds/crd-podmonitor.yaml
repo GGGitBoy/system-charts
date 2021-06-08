@@ -6,9 +6,9 @@ metadata:
     helm.sh/hook: crd-install
     controller-gen.kubebuilder.io/version: v0.2.4
   creationTimestamp: null
-  name: podmonitors.monitoring.coreos.com
+  name: podmonitors.prometheus.coreos.com
 spec:
-  group: monitoring.coreos.com
+  group: prometheus.coreos.com
   names:
     kind: PodMonitor
     listKind: PodMonitorList
@@ -19,7 +19,7 @@ spec:
   - name: v1
     schema:
       openAPIV3Schema:
-        description: PodMonitor defines monitoring for a set of pods.
+        description: PodMonitor defines prometheus for a set of pods.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
