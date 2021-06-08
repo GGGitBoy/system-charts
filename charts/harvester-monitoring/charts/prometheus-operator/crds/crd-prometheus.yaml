@@ -6,9 +6,9 @@ metadata:
     helm.sh/hook: crd-install
     controller-gen.kubebuilder.io/version: v0.2.4
   creationTimestamp: null
-  name: prometheuses.prometheus.coreos.com
+  name: prometheuses.monitoring.coreos.com
 spec:
-  group: prometheus.coreos.com
+  group: monitoring.coreos.com
   names:
     kind: Prometheus
     listKind: PrometheusList
