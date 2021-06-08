@@ -1,6 +1,6 @@
 nameOverride: "prometheus-operator"
 enabledRBAC: true
-apiGroup: "prometheus.coreos.com"
+apiGroup: "monitoring.coreos.com"
 image:
   repository: rancher/coreos-prometheus-operator
   tag: v0.39.0
