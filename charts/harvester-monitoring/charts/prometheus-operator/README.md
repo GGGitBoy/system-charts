@@ -1,3 +1,3 @@
 # prometheus-operator
 
-Install prometheus-operator to deploy prometheus.
+Install prometheus-operator for deploy prometheus.

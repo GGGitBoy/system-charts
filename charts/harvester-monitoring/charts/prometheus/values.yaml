@@ -54,7 +54,6 @@ cluster:
 livenessProbe: {}
 readinessProbe: {}
 
-
 enabledRBAC: true
 
 ## External labels to add to any time series or alerts when communicating with external systems
