@@ -5,7 +5,7 @@ metadata:
   name: {{ $kubeletSvcName }}
   labels:
     k8s-app: kubelet
-    {{ .Values.apiGroup }}: "true"
+    monitoring.coreos.com: "true"
 spec:
   type: ClusterIP
   clusterIP: None
@@ -47,7 +47,7 @@ spec:
             - --log-level={{ .Values.logLevel }}
             - --prometheus-config-reloader={{ .Values.image.prometheusConfigReloader.repository }}:{{ .Values.image.prometheusConfigReloader.tag }}
             - --config-reloader-image={{ .Values.image.configmapReload.repository }}:{{ .Values.image.configmapReload.tag }}
-            - --labels={{ .Values.apiGroup }}=true
+            - --labels=monitoring.coreos.com=true
           ports:
           - containerPort: 8080
             name: http
