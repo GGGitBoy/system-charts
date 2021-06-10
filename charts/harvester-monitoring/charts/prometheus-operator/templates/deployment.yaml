@@ -19,7 +19,7 @@ apiVersion: {{ template "deployment_api_version" . }}
 kind: Deployment
 metadata:
   labels:
-    app: {{ template "app.name" . }}
+    app: {{ .Chart.Name }}
     chart: {{ template "app.version" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
@@ -28,25 +28,25 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "app.name" . }}
+      app: {{ .Chart.Name }}
       chart: {{ template "app.version" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "app.name" . }}
+        app: {{ .Chart.Name }}
         chart: {{ template "app.version" . }}
         release: {{ .Release.Name }}
     spec:
       containers:
         - name: prometheus-operator
-          image: {{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           args:
             - --kubelet-service={{ .Release.Namespace }}/{{ $kubeletSvcName }}
             - --log-format={{ .Values.logFormat }}
             - --log-level={{ .Values.logLevel }}
-            - --prometheus-config-reloader={{ template "system_default_registry" . }}{{ .Values.image.prometheusConfigReloader.repository }}:{{ .Values.image.prometheusConfigReloader.tag }}
-            - --config-reloader-image={{ template "system_default_registry" . }}{{ .Values.image.configmapReload.repository }}:{{ .Values.image.configmapReload.tag }}
+            - --prometheus-config-reloader={{ .Values.image.prometheusConfigReloader.repository }}:{{ .Values.image.prometheusConfigReloader.tag }}
+            - --config-reloader-image={{ .Values.image.configmapReload.repository }}:{{ .Values.image.configmapReload.tag }}
             - --labels={{ .Values.apiGroup }}=true
           ports:
           - containerPort: 8080

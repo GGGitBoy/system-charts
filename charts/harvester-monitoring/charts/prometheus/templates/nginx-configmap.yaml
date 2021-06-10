@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "app.nginx.fullname" . }}
   labels:
-    app: {{ template "app.name" . }}
+    app: {{ .Chart.Name }}
     chart: {{ template "app.version" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}

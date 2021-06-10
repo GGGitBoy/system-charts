@@ -4,13 +4,13 @@ kind: ClusterRole
 metadata:
   name: {{ template "app.fullname" . }}
   labels:
-    app: {{ template "app.name" . }}
+    app: {{ .Chart.Name }}
     chart: {{ template "app.version" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
 rules:
 - apiGroups: 
-  - {{ template "operator_api_group" . }}
+  - monitoring.coreos.com
   resources: 
   - alertmanager
   - alertmanagers
@@ -73,7 +73,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    app: {{ template "app.name" . }}
+    app: {{ .Chart.Name }}
     chart: {{ template "app.version" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
@@ -87,7 +87,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ template "app.fullname" . }}
   labels:
-    app: {{ template "app.name" . }}
+    app: {{ .Chart.Name }}
     chart: {{ template "app.version" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}

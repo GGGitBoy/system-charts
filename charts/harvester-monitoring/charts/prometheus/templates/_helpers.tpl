@@ -78,73 +78,22 @@ serviceMonitorNamespaceSelector:
 
 {{/* vim: set filetype=mustache: */}}
 
-{{- define "app.name" -}}
-{{- default .Chart.Name .Values.nameOverride -}}
-{{- end -}}
-
-
 {{- define "app.version" -}}
-{{- $name := include "app.name" . -}}
+{{- $name := .Chart.Name -}}
 {{- $version := .Chart.Version | replace "+" "_" -}}
 {{- printf "%s-%s" $name $version -}}
 {{- end -}}
 
 
 {{- define "app.fullname" -}}
-{{- $name := include "app.name" . -}}
+{{- $name := .Chart.Name -}}
 {{- printf "%s-%s" $name .Release.Name -}}
 {{- end -}}
 
 
 {{- define "app.nginx.fullname" -}}
-{{- $name := include "app.name" . -}}
+{{- $name := .Chart.Name -}}
 {{- printf "%s-%s-nginx" $name .Release.Name -}}
-{{- end -}}
-
-
-{{- define "operator_api_version" -}}
-{{- default "monitoring.coreos.com/v1" (.Values.apiGroup | printf "%s/v1") -}}
-{{- end -}}
-
-
-{{- define "operator_api_group" -}}
-{{- $apiVersion := include "operator_api_version" . -}}
-{{- index (regexSplit "/" $apiVersion 2) 0 | printf "%s" -}}
-{{- end -}}
-
-
-{{- define "deployment_api_version" -}}
-{{- if .Capabilities.APIVersions.Has "apps/v1" -}}
-{{- "apps/v1" -}}
-{{- else if .Capabilities.APIVersions.Has "apps/v1beta2" -}}
-{{- "apps/v1beta2" -}}
-{{- else if .Capabilities.APIVersions.Has "apps/v1beta1" -}}
-{{- "apps/v1beta1" -}}
-{{- else -}}
-{{- "extensions/v1beta1" -}}
-{{- end -}}
-{{- end -}}
-
-
-{{- define "statefulset_api_version" -}}
-{{- if .Capabilities.APIVersions.Has "apps/v1" -}}
-{{- "apps/v1" -}}
-{{- else if .Capabilities.APIVersions.Has "apps/v1beta2" -}}
-{{- "apps/v1beta2" -}}
-{{- else -}}
-{{- "apps/v1beta1" -}}
-{{- end -}}
-{{- end -}}
-
-
-{{- define "daemonset_api_version" -}}
-{{- if .Capabilities.APIVersions.Has "apps/v1" -}}
-{{- "apps/v1" -}}
-{{- else if .Capabilities.APIVersions.Has "apps/v1beta2" -}}
-{{- "apps/v1beta2" -}}
-{{- else -}}
-{{- "extensions/v1beta1" -}}
-{{- end -}}
 {{- end -}}
 
 
@@ -155,15 +104,6 @@ serviceMonitorNamespaceSelector:
 {{- "rbac.authorization.k8s.io/v1beta1" -}}
 {{- else -}}
 {{- "rbac.authorization.k8s.io/v1alpha1" -}}
-{{- end -}}
-{{- end -}}
-
-
-{{- define "system_default_registry" -}}
-{{- if .Values.global.systemDefaultRegistry -}}
-{{- printf "%s/" .Values.global.systemDefaultRegistry -}}
-{{- else -}}
-{{- "" -}}
 {{- end -}}
 {{- end -}}
 

@@ -1,8 +1,8 @@
-apiVersion: {{ template "operator_api_version" . }}
+apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
   labels:
-    app: {{ template "app.name" . }}
+    app: {{ .Chart.Name }}
     chart: {{ template "app.version" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
@@ -23,7 +23,7 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
-    image: {{ template "system_default_registry" . }}{{ .Values.image.proxy.repository }}:{{ .Values.image.proxy.tag }}
+    image: {{ .Values.image.proxy.repository }}:{{ .Values.image.proxy.tag }}
     ports:
     - containerPort: 8080
       name: nginx-http
@@ -43,10 +43,10 @@ spec:
   podMetadata:
     creationTimestamp: {{ now | date "2006-01-02T15:04:05Z" | quote }}
     labels:
-      app: {{ template "app.name" . }}
+      app: {{ .Chart.Name }}
       chart: {{ template "app.version" . }}
       release: {{ .Release.Name }}
-  image: {{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}
+  image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
 {{- if or (.Values.externalLabels) (eq .Values.level "project") }}
   externalLabels:
 {{- if and (eq .Values.level "project") }}
@@ -138,7 +138,7 @@ spec:
           topologyKey: kubernetes.io/hostname
           labelSelector:
             matchLabels:
-              app: {{ template "app.name" . }}
+              app: {{ .Chart.Name }}
               prometheus: {{ .Release.Name }}
   tolerations:
 {{- include "linux-node-tolerations" . | nindent 4}}
