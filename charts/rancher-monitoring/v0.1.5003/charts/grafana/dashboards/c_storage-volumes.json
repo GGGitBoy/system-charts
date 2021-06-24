@@ -588,7 +588,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(kube_persistentvolumeclaim_status_phase{phase=\"Pending\"})",
+          "expr": "sum(kube_persistentvolumeclaim_status_phase{phase=\"Pending\", namespace=\"$volume_namespace\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -682,7 +682,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(kube_persistentvolumeclaim_status_phase{phase=\"Bound\"})",
+          "expr": "sum(kube_persistentvolumeclaim_status_phase{phase=\"Bound\", namespace=\"$volume_namespace\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -776,7 +776,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(kube_persistentvolumeclaim_status_phase{phase=\"Lost\"})",
+          "expr": "sum(kube_persistentvolumeclaim_status_phase{phase=\"Lost\", namespace=\"$volume_namespace\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -799,6 +799,120 @@
       "valueName": "current"
     },
     {
+      "aliasColors": {
+        "{exported_namespace=\"default\", persistentvolumeclaim=\"dde\"}": "green"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "RANCHER_MONITORING",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 38,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 0,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "percentage": false,
+      "pluginVersion": "7.1.5",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "(sum(kubelet_volume_stats_used_bytes{exported_namespace=\"$volume_namespace\"}) by (persistentvolumeclaim, exported_namespace) ) / (sum(kubelet_volume_stats_capacity_bytes{exported_namespace=\"$volume_namespace\"}) by (persistentvolumeclaim, exported_namespace) ) * 100",
+          "interval": "",
+          "legendFormat": "{{exported_namespace}} ({{persistentvolumeclaim}})",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Running PVC Used",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1475",
+          "format": "percent",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1476",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "columns": [],
       "datasource": "RANCHER_MONITORING",
       "editable": false,
@@ -814,7 +928,7 @@
         "h": 18,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 18
       },
       "id": 10,
       "isNew": false,
@@ -874,7 +988,7 @@
         },
         {
           "$$hashKey": "object:27",
-          "alias": "% Used",
+          "alias": "% Used ",
           "align": "auto",
           "colorMode": "cell",
           "colors": [
@@ -958,7 +1072,7 @@
         },
         {
           "$$hashKey": "object:32",
-          "alias": "Volume Stats Exist?",
+          "alias": "Volume Stats Exist",
           "align": "auto",
           "colorMode": "value",
           "colors": [
@@ -1139,7 +1253,7 @@
       ],
       "targets": [
         {
-          "expr": "kube_persistentvolumeclaim_info",
+          "expr": "kube_persistentvolumeclaim_info{namespace=\"$volume_namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1147,7 +1261,7 @@
           "refId": "E"
         },
         {
-          "expr": "1 - count(kube_persistentvolumeclaim_info) by (persistentvolumeclaim) + count(kubelet_volume_stats_used_bytes) by (persistentvolumeclaim)",
+          "expr": " 1 - count(kube_persistentvolumeclaim_info{namespace=\"$volume_namespace\"}) by (persistentvolumeclaim) + count(kubelet_volume_stats_used_bytes{exported_namespace=\"$volume_namespace\"}) by (persistentvolumeclaim)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1155,7 +1269,7 @@
           "refId": "F"
         },
         {
-          "expr": "max by (persistentvolumeclaim,exported_namespace) (kubelet_volume_stats_used_bytes)",
+          "expr": "sum(kubelet_volume_stats_used_bytes{exported_namespace=\"$volume_namespace\"}) by (persistentvolumeclaim,exported_namespace)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1164,7 +1278,7 @@
           "refId": "A"
         },
         {
-          "expr": "max by (persistentvolumeclaim,exported_namespace) (kubelet_volume_stats_capacity_bytes )",
+          "expr": "sum(kubelet_volume_stats_capacity_bytes{exported_namespace=\"$volume_namespace\"}) by (persistentvolumeclaim,exported_namespace)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1172,7 +1286,7 @@
           "refId": "B"
         },
         {
-          "expr": "max by (persistentvolumeclaim,exported_namespace) (kubelet_volume_stats_available_bytes )",
+          "expr": "sum(kubelet_volume_stats_available_bytes{exported_namespace=\"$volume_namespace\"}) by (persistentvolumeclaim,exported_namespace)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1180,7 +1294,7 @@
           "refId": "C"
         },
         {
-          "expr": "(max by (persistentvolumeclaim,exported_namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,exported_namespace) (kubelet_volume_stats_capacity_bytes ))",
+          "expr": "sum(kubelet_volume_stats_used_bytes{exported_namespace=\"$volume_namespace\"}) by (persistentvolumeclaim,exported_namespace) / sum(kubelet_volume_stats_capacity_bytes{exported_namespace=\"$volume_namespace\"}) by (persistentvolumeclaim,exported_namespace)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1191,248 +1305,43 @@
       "title": "PVC Stats",
       "transform": "table",
       "type": "table-old"
-    },
-    {
-      "collapsed": false,
-      "datasource": "RANCHER_MONITORING",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 28
-      },
-      "id": 20,
-      "panels": [],
-      "title": "Use",
-      "type": "row"
-    },
-    {
-      "aliasColors": {
-        "{exported_namespace=\"default\", persistentvolumeclaim=\"dde\"}": "green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "RANCHER_MONITORING",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 29
-      },
-      "hiddenSeries": false,
-      "id": 38,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "percentage": false,
-      "pluginVersion": "7.1.5",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(kubelet_volume_stats_used_bytes) by (exported_namespace, persistentvolumeclaim)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Panel Title",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1475",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1476",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "RANCHER_MONITORING",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 37
-      },
-      "hiddenSeries": false,
-      "id": 36,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "percentage": false,
-      "pluginVersion": "7.1.5",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(kubelet_volume_stats_used_bytes) by (exported_namespace, persistentvolumeclaim)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Panel Title",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
     }
   ],
   "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "default",
+          "value": "default"
+        },
+        "datasource": "RANCHER_MONITORING",
+        "definition": "label_values(kube_persistentvolumeclaim_info, namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Namespace",
+        "multi": false,
+        "name": "volume_namespace",
+        "options": [],
+        "query": "label_values(kube_persistentvolumeclaim_info, namespace)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
