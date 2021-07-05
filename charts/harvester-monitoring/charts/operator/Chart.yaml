@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Creates Prometheus Operator for Harvester.
+name: operator
+version: 0.0.2

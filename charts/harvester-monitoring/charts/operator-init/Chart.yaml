@@ -1,0 +1,7 @@
+apiVersion: v1
+name: operator-init
+version: 0.1.0
+appVersion: 0.1.0
+description: Helm chart to initialize Prometheus Operator CRDs
+
+
