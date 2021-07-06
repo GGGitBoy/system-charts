@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 11748,
   "graphTooltip": 0,
-  "iteration": 1625478719949,
+  "iteration": 1625548707122,
   "links": [],
   "panels": [
     {
@@ -1714,19 +1714,19 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "aaa",
           "value": "aaa"
         },
         "datasource": "RANCHER_MONITORING",
-        "definition": "label_values(kubevirt_vmi_vcpu_seconds{exported_namespace=\"$namespace\"}, name)",
+        "definition": "label_values(kubevirt_vmi_vcpu_seconds{namespace=\"$namespace\"}, name)",
         "hide": 0,
         "includeAll": false,
         "label": "vm",
         "multi": false,
         "name": "vm",
         "options": [],
-        "query": "label_values(kubevirt_vmi_vcpu_seconds{exported_namespace=\"$namespace\"}, name)",
+        "query": "label_values(kubevirt_vmi_vcpu_seconds{namespace=\"$namespace\"}, name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
