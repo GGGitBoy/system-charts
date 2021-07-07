@@ -15,8 +15,7 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 0,
-    "id": 2,
-    "iteration": 1625624512225,
+    "iteration": 1625629402362,
     "links": [],
     "panels": [
       {
@@ -39,14 +38,41 @@
         "datasource": null,
         "fieldConfig": {
           "defaults": {
-            "custom": {}
+            "custom": {},
+            "mappings": [],
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
           },
-          "overrides": []
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byType",
+                "options": "number"
+              },
+              "properties": [
+                {
+                  "id": "noValue",
+                  "value": "sss"
+                }
+              ]
+            }
+          ]
         },
         "fill": 1,
         "fillGradient": 0,
         "gridPos": {
-          "h": 9,
+          "h": 7,
           "w": 12,
           "x": 0,
           "y": 1
@@ -64,7 +90,7 @@
         },
         "lines": true,
         "linewidth": 1,
-        "nullPointMode": "null",
+        "nullPointMode": "null as zero",
         "percentage": false,
         "pluginVersion": "7.1.5",
         "pointradius": 2,
@@ -72,13 +98,14 @@
         "renderer": "flot",
         "seriesOverrides": [],
         "spaceLength": 10,
-        "stack": false,
+        "stack": true,
         "steppedLine": false,
         "targets": [
           {
-            "expr": "topk(${count}, max_over_time((avg(rate(kubevirt_vmi_vcpu_seconds[5m])) by (domain, name))[${duration}:])) ",
+            "expr": "topk(${count}, (avg(rate(kubevirt_vmi_vcpu_seconds[5m])) by (domain, name))) ",
+            "instant": false,
             "interval": "",
-            "legendFormat": "",
+            "legendFormat": "{{name}}",
             "refId": "A"
           }
         ],
@@ -86,7 +113,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "kubevirt_vmi_vcpu_seconds",
+        "title": "CPU Usage",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -102,7 +129,8 @@
         },
         "yaxes": [
           {
-            "format": "short",
+            "$$hashKey": "object:370",
+            "format": "percentunit",
             "label": null,
             "logBase": 1,
             "max": null,
@@ -110,6 +138,7 @@
             "show": true
           },
           {
+            "$$hashKey": "object:371",
             "format": "short",
             "label": null,
             "logBase": 1,
@@ -128,7 +157,7 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": null,
+        "datasource": "RANCHER_MONITORING",
         "fieldConfig": {
           "defaults": {
             "custom": {}
@@ -138,7 +167,7 @@
         "fill": 1,
         "fillGradient": 0,
         "gridPos": {
-          "h": 9,
+          "h": 7,
           "w": 12,
           "x": 12,
           "y": 1
@@ -156,7 +185,7 @@
         },
         "lines": true,
         "linewidth": 1,
-        "nullPointMode": "null",
+        "nullPointMode": "null as zero",
         "percentage": false,
         "pluginVersion": "7.1.5",
         "pointradius": 2,
@@ -168,9 +197,10 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "topk(${count}, max_over_time((kubevirt_vmi_memory_resident_bytes)[${duration}:]))",
+            "expr": "topk(${count}, (kubevirt_vmi_memory_resident_bytes))",
+            "instant": false,
             "interval": "",
-            "legendFormat": "",
+            "legendFormat": "{{name}}",
             "refId": "A"
           }
         ],
@@ -178,7 +208,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "kubevirt_vmi_memory_resident_bytes",
+        "title": "Memory Usage",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -194,7 +224,8 @@
         },
         "yaxes": [
           {
-            "format": "short",
+            "$$hashKey": "object:771",
+            "format": "bytes",
             "label": null,
             "logBase": 1,
             "max": null,
@@ -202,6 +233,7 @@
             "show": true
           },
           {
+            "$$hashKey": "object:772",
             "format": "short",
             "label": null,
             "logBase": 1,
@@ -222,7 +254,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 10
+          "y": 8
         },
         "id": 8,
         "panels": [],
@@ -247,22 +279,27 @@
           "h": 9,
           "w": 12,
           "x": 0,
-          "y": 11
+          "y": 9
         },
         "hiddenSeries": false,
         "id": 2,
         "legend": {
+          "alignAsTable": false,
           "avg": false,
           "current": false,
+          "hideEmpty": false,
+          "hideZero": true,
           "max": false,
           "min": false,
+          "rightSide": false,
           "show": true,
+          "sideWidth": null,
           "total": false,
           "values": false
         },
         "lines": true,
         "linewidth": 1,
-        "nullPointMode": "null",
+        "nullPointMode": "null as zero",
         "percentage": false,
         "pluginVersion": "7.1.5",
         "pointradius": 2,
@@ -274,9 +311,9 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "topk(${count}, max_over_time((sum(irate(kubevirt_vmi_storage_read_traffic_bytes_total[5m])) by (name, namespace))[${duration}:])) ",
+            "expr": "topk(${count}, (irate(kubevirt_vmi_storage_read_traffic_bytes_total[5m]))) ",
             "interval": "",
-            "legendFormat": "",
+            "legendFormat": "{{name}}: {{drive}}",
             "refId": "A"
           }
         ],
@@ -284,7 +321,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "kubevirt_vmi_storage_read_traffic_bytes_total",
+        "title": "Storage Read Traffic Bytes",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -300,7 +337,8 @@
         },
         "yaxes": [
           {
-            "format": "short",
+            "$$hashKey": "object:1285",
+            "format": "Bps",
             "label": null,
             "logBase": 1,
             "max": null,
@@ -308,6 +346,7 @@
             "show": true
           },
           {
+            "$$hashKey": "object:1286",
             "format": "short",
             "label": null,
             "logBase": 1,
@@ -339,13 +378,15 @@
           "h": 9,
           "w": 12,
           "x": 12,
-          "y": 11
+          "y": 9
         },
         "hiddenSeries": false,
         "id": 12,
         "legend": {
           "avg": false,
           "current": false,
+          "hideEmpty": false,
+          "hideZero": true,
           "max": false,
           "min": false,
           "show": true,
@@ -354,7 +395,7 @@
         },
         "lines": true,
         "linewidth": 1,
-        "nullPointMode": "null",
+        "nullPointMode": "null as zero",
         "percentage": false,
         "pluginVersion": "7.1.5",
         "pointradius": 2,
@@ -366,9 +407,9 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "topk(${count}, max_over_time((sum(irate(kubevirt_vmi_storage_write_traffic_bytes_total[5m])) by (name, namespace))[${duration}:])) ",
+            "expr": "topk(${count}, (irate(kubevirt_vmi_storage_write_traffic_bytes_total[5m]))) ",
             "interval": "",
-            "legendFormat": "",
+            "legendFormat": "{{name}}: {{drive}}",
             "refId": "A"
           }
         ],
@@ -376,7 +417,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "kubevirt_vmi_storage_write_traffic_bytes_total",
+        "title": "Storage Write Traffic Bytes",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -392,7 +433,8 @@
         },
         "yaxes": [
           {
-            "format": "short",
+            "$$hashKey": "object:1613",
+            "format": "Bps",
             "label": null,
             "logBase": 1,
             "max": null,
@@ -400,6 +442,7 @@
             "show": true
           },
           {
+            "$$hashKey": "object:1614",
             "format": "short",
             "label": null,
             "logBase": 1,
@@ -420,7 +463,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 20
+          "y": 18
         },
         "id": 14,
         "panels": [],
@@ -445,13 +488,14 @@
           "h": 9,
           "w": 12,
           "x": 0,
-          "y": 21
+          "y": 19
         },
         "hiddenSeries": false,
         "id": 16,
         "legend": {
           "avg": false,
           "current": false,
+          "hideEmpty": false,
           "max": false,
           "min": false,
           "show": true,
@@ -472,9 +516,9 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "topk(${count}, max_over_time((sum(irate(kubevirt_vmi_network_receive_bytes_total[5m])*8) by (name, namespace, interface))[${duration}:]))",
+            "expr": "topk(${count}, (irate(kubevirt_vmi_network_receive_bytes_total[5m])*8))",
             "interval": "",
-            "legendFormat": "",
+            "legendFormat": "{{name}}",
             "refId": "A"
           }
         ],
@@ -482,7 +526,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "kubevirt_vmi_network_receive_bytes_total",
+        "title": "Network Receive Bytes",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -498,7 +542,8 @@
         },
         "yaxes": [
           {
-            "format": "short",
+            "$$hashKey": "object:2188",
+            "format": "bps",
             "label": null,
             "logBase": 1,
             "max": null,
@@ -506,6 +551,7 @@
             "show": true
           },
           {
+            "$$hashKey": "object:2189",
             "format": "short",
             "label": null,
             "logBase": 1,
@@ -537,7 +583,7 @@
           "h": 9,
           "w": 12,
           "x": 12,
-          "y": 21
+          "y": 19
         },
         "hiddenSeries": false,
         "id": 18,
@@ -564,9 +610,9 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "topk(${count}, max_over_time((sum(irate(kubevirt_vmi_network_transmit_bytes_total[5m])*8) by (name, namespace, interface))[${duration}:]))",
+            "expr": "topk(${count}, (irate(kubevirt_vmi_network_transmit_bytes_total[5m])*8))",
             "interval": "",
-            "legendFormat": "",
+            "legendFormat": "{{name}}",
             "refId": "A"
           }
         ],
@@ -574,7 +620,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "kubevirt_vmi_network_transmit_bytes_total",
+        "title": "Network Transmit Bytes",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -590,7 +636,8 @@
         },
         "yaxes": [
           {
-            "format": "short",
+            "$$hashKey": "object:2273",
+            "format": "bps",
             "label": null,
             "logBase": 1,
             "max": null,
@@ -598,6 +645,7 @@
             "show": true
           },
           {
+            "$$hashKey": "object:2274",
             "format": "short",
             "label": null,
             "logBase": 1,
@@ -650,55 +698,11 @@
           "queryValue": "",
           "skipUrlSync": false,
           "type": "custom"
-        },
-        {
-          "allValue": null,
-          "current": {
-            "selected": true,
-            "text": "30m",
-            "value": "30m"
-          },
-          "hide": 0,
-          "includeAll": false,
-          "label": "duration",
-          "multi": false,
-          "name": "duration",
-          "options": [
-            {
-              "selected": true,
-              "text": "30m",
-              "value": "30m"
-            },
-            {
-              "selected": false,
-              "text": "12h",
-              "value": "12h"
-            },
-            {
-              "selected": false,
-              "text": "1d",
-              "value": "1d"
-            },
-            {
-              "selected": false,
-              "text": "7d",
-              "value": "7d"
-            },
-            {
-              "selected": false,
-              "text": "30d",
-              "value": "30d"
-            }
-          ],
-          "query": "30m, 12h, 1d, 7d, 30d",
-          "queryValue": "",
-          "skipUrlSync": false,
-          "type": "custom"
         }
       ]
     },
     "time": {
-      "from": "now-6h",
+      "from": "now-30m",
       "to": "now"
     },
     "timepicker": {
@@ -718,5 +722,5 @@
     "timezone": "",
     "title": "New dashboard Copy",
     "uid": "V3EJMiinz",
-    "version": 2
+    "version": 1
 }
