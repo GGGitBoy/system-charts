@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 11748,
   "graphTooltip": 0,
-  "iteration": 1625713417615,
+  "iteration": 1625799894782,
   "links": [],
   "panels": [
     {
@@ -151,7 +151,7 @@
       "pluginVersion": "7.1.5",
       "targets": [
         {
-          "expr": "sum((kubevirt_vmi_memory_resident_bytes{namespace=\"$namespace\", name=\"$vm\"} - kubevirt_vmi_memory_usable_bytes{namespace=\"$namespace\", name=\"$vm\"} - kubevirt_vmi_memory_unused_bytes{namespace=\"$namespace\", name=\"$vm\"})/kubevirt_vmi_memory_available_bytes{namespace=\"$namespace\", name=\"$vm\"})",
+          "expr": "sum((kubevirt_vmi_memory_available_bytes{namespace=\"$namespace\", name=\"$vm\"} -kubevirt_vmi_memory_unused_bytes{namespace=\"$namespace\", name=\"$vm\"})/kubevirt_vmi_memory_available_bytes{namespace=\"$namespace\", name=\"$vm\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -644,9 +644,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "eee",
-          "value": "eee"
+          "selected": false,
+          "text": "test",
+          "value": "test"
         },
         "datasource": "RANCHER_MONITORING",
         "definition": "label_values(kubevirt_vmi_vcpu_seconds{namespace=\"$namespace\"}, name)",

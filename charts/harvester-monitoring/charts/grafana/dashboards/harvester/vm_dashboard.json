@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1625725783234,
+  "iteration": 1625800207135,
   "links": [],
   "panels": [
     {
@@ -550,7 +550,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "topk(${count}, ((kubevirt_vmi_memory_resident_bytes - kubevirt_vmi_memory_usable_bytes - kubevirt_vmi_memory_unused_bytes) / kubevirt_vmi_memory_available_bytes))",
+          "expr": "topk(${count}, ((kubevirt_vmi_memory_available_bytes - kubevirt_vmi_memory_unused_bytes) / kubevirt_vmi_memory_available_bytes))",
           "instant": false,
           "interval": "",
           "legendFormat": "{{name}}",
