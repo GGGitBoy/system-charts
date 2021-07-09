@@ -12,7 +12,7 @@
       }
     ]
   },
-  "description": "KubeVirt VM Info",
+  "description": "VM Info Detail",
   "editable": true,
   "gnetId": 11748,
   "graphTooltip": 0,
@@ -699,7 +699,7 @@
     ]
   },
   "timezone": "",
-  "title": "KubeVirt VM Info",
+  "title": "VM Info Detail",
   "uid": "HV_1uZwWk",
   "version": 1
 }
